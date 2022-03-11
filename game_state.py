@@ -2,7 +2,7 @@ from string import ascii_lowercase
 
 from word_selector import WordSelector
 from letter_state import LetterState
-from turn_state import TurnState
+
 from utils import translate
 
 # TODO: aumentar as palavras possiveis de serem chutadas, olhando para o dataset maior
@@ -18,13 +18,11 @@ class GameState:
         self.correct_word = selector.select_word()
         self.compared_word = translate(self.correct_word)
 
-        self.words_played = []
         self.possible_words = set(selector.words)
         self.letters = {letter: LetterState.NOT_USED for letter in ascii_lowercase}
 
 
     def update(self, new_word):
-        self.words_played.append(TurnState(self.correct_word, new_word))
         self.update_letters(new_word)
         
         self.turns_played += 1
@@ -32,6 +30,8 @@ class GameState:
             self.win = True
         elif self.turns_played == self.n_turns:
             self.lose = True
+
+        return self.letters
 
 
     def update_letters(self, word):
