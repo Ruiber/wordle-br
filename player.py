@@ -36,7 +36,7 @@ class Player:
 
         if not self.is_valid(word):
             print('\nEntrada inválida. Tente novamente\n')
-            self.choose_word(correct_word)
+            return self.choose_word(correct_word)
 
         self.words_played.append(TurnState(correct_word, word))
         return word
