@@ -3,11 +3,13 @@ from string import ascii_lowercase
 
 from letter_state import LetterState
 from turn_state import TurnState
+from word_selector import WordSelector
 
-#TODO: transformar o player em uma classe e trazer a lista de palavras jogadas para o player
 class Player:
-    def __init__(self):
+    def __init__(self, word_len):
         self.words_played = []
+        self.word_len = word_len
+        self.word_selector = WordSelector(word_len)
 
 
     def print_state(self, letters):
@@ -29,8 +31,16 @@ class Player:
         print(Fore.WHITE)
 
     
-    #TODO: checar validade da palavra
     def choose_word(self, correct_word):
         word = input('\nDigite sua palavra: ')
+
+        if not self.is_valid(word):
+            print('\nEntrada inválida. Tente novamente\n')
+            self.choose_word(correct_word)
+
         self.words_played.append(TurnState(correct_word, word))
         return word
+
+    
+    def is_valid(self, word):
+        return len(word) == self.word_len and self.word_selector.is_valid_word(word)

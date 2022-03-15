@@ -8,7 +8,7 @@ WORD_LEN = 5
 
 def main():
     game = GameState(N_TURNS, WORD_LEN)
-    player = Player()
+    player = Player(WORD_LEN)
     correct_word = game.correct_word
 
     for _ in range(N_TURNS):
